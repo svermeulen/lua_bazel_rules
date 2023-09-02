@@ -1,0 +1,12 @@
+load("@//buildtools/lua:defs.bzl", "lua_library")
+
+lua_library(
+    name = "lib1",
+    srcs = glob(["lib1/**/*.lua"]),
+    import_path = ".",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//examples/lib2:lib2",
+    ],
+)
+

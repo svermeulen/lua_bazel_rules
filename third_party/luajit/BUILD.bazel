@@ -1,0 +1,32 @@
+
+load("@rules_foreign_cc//foreign_cc:configure.bzl", "configure_make")
+
+# This setup was taken from the envoy project
+
+exports_files([
+    "luajit.patch",
+])
+
+configure_make(
+    name = "luajit-build",
+    configure_command = "build.py",
+    env = select({
+        "//conditions:default": {},
+    }),
+    lib_source = "@com_github_luajit_luajit//:all",
+    out_include_dir = "include/luajit-2.1",
+    out_static_libs = select({
+        "//conditions:default": ["libluajit-5.1.a"],
+    }),
+    out_binaries = ["luajit-2.1.0-beta3"],
+    targets = [],
+)
+
+genrule(
+    name = "luajit",
+    srcs = ["//third_party/luajit:luajit-build"],
+    outs = ["luajit-2.1.0-beta3"],
+    cmd = "cp `ls $(locations //third_party/luajit:luajit-build) | grep luajit-2.1.0-beta3` $(@)",
+    executable = True,
+    visibility = ["//visibility:public"],
+)

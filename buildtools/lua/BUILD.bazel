@@ -1,0 +1,11 @@
+alias(
+    name = "lua",
+    actual = "@remote_lua51_repository//:lua",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "luac",
+    actual = "@remote_lua51_repository//:luac",
+    visibility = ["//visibility:public"],
+)
